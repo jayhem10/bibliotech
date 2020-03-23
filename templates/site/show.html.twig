@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+
+
+{% block body %}
+
+<div class="container">
+
+        
+                <h1 class="my-5">Cet objet est dans la collection de {{collection.user.pseudo}}</h1>
+                <h2 class="mt-5"> {{collection.title}}</h2>
+                <div class="metadata">{{collection.year | raw}}</div>
+                <div class="content">
+                        <img src="{{collection.image}}" class="img-thumbnail"  alt="">
+                        <p>{{collection.author | raw}}</p>
+                        <p>{{collection.edition | raw}}</p>
+                        <hr>
+                        <p>{{collection.note | raw}} / 20</p>
+                </div>
+
+</div>
+
+<div class="container">
+        
+                <a class="btn btn-primary" href="{{ path('collection_edit', { 'id': collection.id})}}" role="button">Editer</a>
+                <a class="btn btn-danger ml-3" href="{{ path('collection_delete', { 'id': collection.id})}}" role="button">Supprimer</a>
+        
+</div>
+
+{% endblock %}
+
+

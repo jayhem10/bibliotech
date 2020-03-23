@@ -1,0 +1,87 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+<div class="container my-5">
+    {% for message in app.flashes('success') %}
+        <div class="alert-info text-center mt-3" role="alert">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+
+{% for message in app.flashes('success1') %}
+    <div class="alert-info text-center mt-3" role="alert">
+        {{ message }}
+    </div>
+{% endfor %}
+
+</div>
+
+<h1 class="text-center mt-5">Bienvenue sur votre profil {{app.user.pseudo}}</h1>
+
+<div class="container my-5">
+    <div class="text-center">
+        <div class="row">
+            <img class="col col-lg-6" src="{{ asset('images/books.jpg')}}" style="width: 600px; height: auto ;" alt="">
+            <div class="col col-lg-6 my-5">
+                <h4>Vous avez <u><a href="{{ path('collection')}}">{{listes|length}} objet(s)</a></u> dans votre collection !</h4>
+            
+                            {% if listes|length >= 1 and listes|length <= 50 %}
+                            <div class="text-center my-5">
+                            <h4> Votre grade actuel est : Collectionneur en herbe</h4>
+                            <img style="width: 32px;" src="{{ asset('images/star.png')}}" alt="">
+                            <h4 class="my-5"> Atteignez le grade suivant en ayant 50 éléments dans votre collection</h4>
+                            </div>
+
+                                {% elseif listes|length > 50 and listes|length <= 250 %}
+
+                                    <div class="text-center my-5">
+                                    <h4>Votre grade actuel est : Collectionneur en devenir ({{listes|length}})</h4>
+                                    <img  style="width: 32px;" src="{{ asset('images/star.png')}}" alt=""><img style="width: 32px;" src="{{ asset('images/star.png')}}" alt="">
+                                    <h4 class="my-5"> Atteignez le grade suivant en ayant 250 éléments dans votre collection</h4>
+                                    </div>
+
+                                    {% elseif listes|length > 250 and listes|length <= 500 %}
+
+                                        <div class="text-center my-5">
+                                        <h4 class="text-center">Votre grade actuel est : Collectionneur avéré ({{listes|length}})</h4>
+                                        <img  style="width: 32px;" src="{{ asset('images/star.png')}}" alt=""><img style="width: 32px;" src="{{ asset('images/star.png')}}" alt=""><img  style="width: 32px;" src="{{ asset('images/star.png')}}" alt="">
+                                        <h4 class="my-5"> Atteignez le grade suivant en ayant 500 éléments dans votre collection</h4>
+                                        </div>
+
+                                        {% elseif listes|length > 500 and listes|length <= 1000 %}
+
+                                            <div class="text-center my-5">
+                                            <h4 class="text-center">Votre grade actuel est : Grand collectionneur ({{listes|length}})</h4>
+                                            <img style="width: 32px;" src="{{ asset('images/star.png')}}" alt=""><img style="width: 32px;" src="{{ asset('images/star.png')}}" alt=""><img style="width: 32px;" src="{{ asset('images/star.png')}}" alt=""><img style="width: 32px;" src="{{ asset('images/star.png')}}" alt="">
+                                            <h4 class="my-5"> Atteignez le grade suivant en ayant 1000 éléments dans votre collection</h4>
+                                            hello
+                                            </div>
+
+                                                {% else %}
+
+                                                    <div class="text-center my-5">
+                                                    <h4 class="text-center">Votre grade actuel est : Maître collectionneur ({{listes|length}})</h4>
+                                                    <img style="width: 32px;" src="{{ asset('images/star.png')}}" alt=""><img style="width: 32px;" src="{{ asset('images/star.png')}}" alt=""><img style="width: 32px;" src="{{ asset('images/star.png')}}" alt=""><img style="width: 32px;" src="{{ asset('images/star.png')}}" alt=""><img style="width: 32px;" src="{{ asset('images/star.png')}}" alt="">
+                                                    <h4 class="my-5"> Félicitations, vous avez atteint le grade suprême !</h4>
+                                                    </div>
+
+                        {% endif %}
+                        <h4>Vous suivez actuellement X personnes</h4>
+                        </div>
+                        
+
+        </div>
+    </div>
+</div>
+        
+<div class="container text-center my-5">
+    <a href="{{ path('account_profile')}}" class="btn btn-outline-dark text-center" role="button" aria-pressed="true">Modifier mon profil</a>
+    </div>
+    <div class="container text-center my-5">
+        <a href="{{ path('account_password')}}" class="btn btn-outline-dark text-center" role="button" aria-pressed="true">Modifier mon mot de passe</a>
+        </div>
+
+
+{% endblock %}

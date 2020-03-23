@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% form_theme formCollection 'bootstrap_4_layout.html.twig' %}
+
+
+
+{% block body %}
+
+{% if editMode %}
+<div class="container">
+    <h1 class="my-5">Modifier votre élément ! </h1>
+</div>
+
+{% else %}
+<div class="container">
+    <h1 class="my-5">Ajouter un élément à votre collection !</h1>
+</div>
+{% endif %}
+
+<div class="container">
+{{ form_start(formCollection) }}
+
+{{ form_row(formCollection.title, {'attr' : {'placeholder':"Nom de l'élément"}}) }}
+{{ form_row(formCollection.author, {'attr' : {'placeholder':"Qui est le créateur de cette oeuvre?"}}) }}
+{{ form_row(formCollection.edition, {'attr' : {'placeholder':"Maison d'édition, le label,..."}}) }}
+{{ form_row(formCollection.reference, {'attr' : {'placeholder':"Le code ou référence de l'oeuvre"}}) }}
+{{ form_row(formCollection.category) }}
+{{ form_row(formCollection.year, {'attr' : {'placeholder':"Date de sortie"}}) }}
+{{ form_row(formCollection.image, {'attr' : {'placeholder':"URL complet vers une image de l'élément"}}) }}
+{{ form_row(formCollection.note, {'attr' : {'placeholder':"Votre note"}}) }}
+
+
+
+
+<button  type="submit" class="btn btn-info mt-3 mb-5">
+    {% if editMode %}
+    Save changes
+    {% else %}
+    Add
+    {% endif %}
+    </button>
+
+
+{{ form_end(formCollection) }}
+
+</div>
+
+
+
+{% endblock %}   

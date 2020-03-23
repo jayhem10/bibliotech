@@ -1,0 +1,106 @@
+{% extends 'base.html.twig' %}
+
+
+
+
+{% block body %}
+
+{% if app.user %}
+<div class="container text-center my-5">
+    <h1 class="">Bienvenue {{ app.user.pseudo}}</h1>
+</div>
+
+<div class="container text-center my-5">
+<a href="{{ path('collection')}}" class="btn btn-outline-dark text-center" role="button" aria-pressed="true">Ma collection</a>
+</div>
+
+<div class="container my-5 d-flex">
+    <div class="align-items-center">
+        <img class="col-12" src="{{ asset('images/connected.jpg')}}" alt="">
+        <figcaption class="text-center">Tu es connecté(e)</figcaption>
+    </div>
+</div>
+
+{% else %}
+
+<h1 class="my-5 text-center">Bienvenue sur Biblio'tech, le seul gestionnaire de médiathèque en ligne!</h1>
+
+
+<div class="container my-5 d-flex">
+    <div class="row align-items-center">
+        <h2 class="col-4">Inscris-toi et crée ta librairie culturelle en un rien de temps!</h2>
+        <img class="col-8" src="{{ asset('images/exemple.png')}}" alt="">
+    </div>
+</div>
+
+
+<div class="container-fluid my-5  bg-primary">
+    <div class="row text-center py-5">
+        <h2 class="col-12 text-light">Gestion de collection de vinyles, de blu-ray, de livres et pleins d'autres encore ...</h2>
+    </div>
+</div>
+
+
+<div class="container d-flex">
+    <div class="row align-items-center">
+        <img class="col-8" src="{{ asset('images/form.png')}}" alt="">
+        <h2 class="col-4">Peut gérer diverses collections, et ce, grâce à un seul formulaire!</h2>
+    </div>
+</div>
+
+
+<div class="container-fluid my-5  bg-primary">
+    <div class="row text-center py-5">
+        <h2 class="col-12 text-light">Un achat à faire, une collection déjà bien remplie?</h2>
+    </div>
+</div>
+
+
+<div class="container d-flex">
+    <div class="row align-items-center">
+        <h2 class="col-6">Ayez accès n'importe où à votre collection et faites le bon achat pour la compléter :)</h2>
+        <img class="col-6" style="width: 50px;" src="{{ asset('images/vinyle.jpg')}}" alt="">
+       
+    </div>
+</div>
+
+
+
+<div class=" container-fluid footer mt-5">
+    <div class="page-footer font-small ">
+
+              <!-- Footer Elements -->
+              <div class="container">
+            
+                <!-- Call to action -->
+                <ul class="list-unstyled list-inline text-center py-2">
+                  <li class="list-inline-item">
+                    <h5 class="mb-1">Register for free</h5>
+                  </li>
+                  <li class="list-inline-item">
+                    <a href="{{ path('security_registration')}}" class="btn btn-outline-dark">Sign up!</a>
+                  </li>
+                </ul>
+                <!-- Call to action -->
+            
+              </div>
+
+                <!-- Footer Elements -->
+                        
+                <!-- Copyright -->
+                <div class="container-fluid">
+                    <div class="footer-copyright text-center my-5 text-primary  ">© 2020 Copyright:
+                      <a class="" href="https://www.instagram.com/jayhem10/?hl=fr" target="_blank"> Jérémy Noble</a>
+                    </div>
+                  </div>
+                <!-- Copyright -->
+    
+              </div>
+            </div>
+
+{% endif %}
+
+
+{% endblock %}
+
+

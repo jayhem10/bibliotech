@@ -1,0 +1,102 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello SiteController!{% endblock %}
+
+
+
+{% block body %}
+
+
+{% if app.user %}
+
+<h1 class="my-5 text-center">Bienvenue {{ app.user.pseudo}}</h1>
+
+{% else %}
+
+<h1 class="my-5">Inscris-toi et crée ta librairie culturelle en un rien de temps!</h1>
+
+{% endif %}
+
+<div class="container">
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">
+           <a href="{{ path('category_cd')}}">CD</a>
+        </th>
+        <th scope="col">
+            <a href="{{ path('category_jeux')}}">Jeux vidéos</a>
+
+        </th>
+        <th scope="col">
+            <a href="{{ path('category_livre')}}">Livre</a>
+
+        </th>
+        <th scope="col">
+            <a href="{{ path('category_bluray')}}">Blu-ray</a>
+
+        </th>
+        <th scope="col">
+            <a href="{{ path('category_dvd')}}">DVD</a>
+
+        </th>
+        <th scope="col">
+            <a href="{{ path('category_vinyle')}}">Vinyle</a>
+        </th>
+      </tr>
+    </thead>
+  </table>
+
+  <form>
+    <div class="input-group my-5">
+        <input type="text"
+               name="q"
+               class="form-control"
+               placeholder="Search..."
+        >
+        <div class="input-group-append">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+    </div>
+</form>
+</div>
+
+
+  {% if livres  %}
+
+  <h4 class="text-center">Ici, vous avez {{livres|length}} élément(s) de votre collection</h4>
+
+
+  <div class="container">
+    <section class="articles my-5 ">
+        <div class="row">
+            {% for livre in livres|slice(0,18) %}
+                <div class="col-4 col-md-6 col-sm-12 text-center">
+                    <articles>
+                        <h2 class="mt-5">{{livre.title}}</h2>
+                        <h4>{{livre.category.title}}</h4>
+                        <div class="metadata">{{livre.year}}</div>
+                        <div class="content">
+                            <img src="{{livre.image}}" width="300px" height="auto" alt="">
+                            <div> {{livre.author | raw}} </div>
+                            <div>{{livre.reference | raw}}</div>
+                            <a href="{{ path('site_show' , {'id':livre.id}) }}" class="btn btn-primary">lire la suite</a>
+                        </div>
+                    </articles>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+</div>
+
+    {% else %}
+
+    <h1 class="text-center">Vous n'avez pas d'éléments dans cette collection !</h1>
+    <h3 class="text-center mt-5">Ajoutez-en et venez contempler votre belle médiathèque ! :)</h3>
+    <div class="container text-center">
+    <img class="center" src="https://www.covoiturage-simple.com/images/oups.png" alt="">
+    
+    {% endif %}
+    
+
+{% endblock %}

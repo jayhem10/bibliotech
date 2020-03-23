@@ -1,0 +1,117 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+
+
+{% for liste in listes|slice(0, 1) %}
+    <div class="container text-center my-5">
+        <h1>Vous êtes dans la collection de {{liste.user.pseudo}}</h1>
+        <h3>Suis-le et accède rapidement à sa collection !</h3>
+
+        
+      <a href="#" class="btn btn-success my-5">Suivre</a>
+          
+      <a href="#" class="btn btn-danger">Ne plus suivre</a>
+
+        
+
+        <form>
+            <div class="input-group my-5">
+                <input type="text"
+                       name="u"
+                       class="form-control"
+                       placeholder="Search..."
+                >
+                <div class="input-group-append">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endfor %}
+        
+
+
+        
+  
+
+
+
+{% if listes|length >= 1 and listes|length <= 50 %}
+
+    <div class="text-center">
+    <h1 >Collectionneur en herbe ({{listes|length}})</h1>
+    <img style="width: 32px;" src="{{ asset('images/star.png')}}" alt="">
+    </div>
+
+        {% elseif listes|length > 50 and listes|length <= 250 %}
+
+            <div class="text-center">
+            <h1>Collectionneur en devenir ({{listes|length}})</h1>
+            <img  style="width: 32px;" src="{{ asset('images/star.png')}}" alt=""><img style="width: 32px;" src="{{ asset('images/star.png')}}" alt="">
+            </div>
+
+            {% elseif listes|length > 250 and listes|length <= 500 %}
+
+                <div class="text-center">
+                <h1 class="text-center">Collectionneur avéré ({{listes|length}})</h1>
+                <img  style="width: 32px;" src="{{ asset('images/star.png')}}" alt=""><img style="width: 32px;" src="{{ asset('images/star.png')}}" alt=""><img  style="width: 32px;" src="{{ asset('images/star.png')}}" alt="">
+                </div>
+
+                {% elseif listes|length > 500 and listes|length <= 1000 %}
+
+                    <div class="text-center">
+                    <h1 class="text-center">Grand collectionneur ({{listes|length}})</h1>
+                    <img style="width: 32px;" src="{{ asset('images/star.png')}}" alt=""><img style="width: 32px;" src="{{ asset('images/star.png')}}" alt=""><img style="width: 32px;" src="{{ asset('images/star.png')}}" alt=""><img style="width: 32px;" src="{{ asset('images/star.png')}}" alt="">
+                    </div>
+
+                        {% else %}
+
+                            <div class="text-center">
+                            <h1 class="text-center">Maître collectionneur ({{listes|length}})</h1>
+                            <img style="width: 32px;" src="{{ asset('images/star.png')}}" alt=""><img style="width: 32px;" src="{{ asset('images/star.png')}}" alt=""><img style="width: 32px;" src="{{ asset('images/star.png')}}" alt=""><img style="width: 32px;" src="{{ asset('images/star.png')}}" alt=""><img style="width: 32px;" src="{{ asset('images/star.png')}}" alt="">
+                            </div>
+
+{% endif %}
+
+
+
+
+
+    {% if listes  %}
+
+
+<div class="container">
+    <section class="articles my-5">
+        <div class="row">
+            {% for liste in listes|slice(0,18) %}
+                <div class="col-3 col-md-6 col-sm-12 text-center">
+                    <articles>
+                        <h2 class="mt-5">{{liste.title}}</h2>
+                        <h4>{{liste.category.title}}</h4>
+                        <div class="metadata">{{liste.year}}</div>
+                        <div class="content">
+                            <img src="{{liste.image}}" width="300px" height="auto" alt="">
+                            <div> {{liste.author | raw}} </div>
+                            <div>{{liste.reference | raw}}</div>
+                        </div>
+                    </articles>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+    </div>
+
+{% else %}
+
+    <h1 class="text-center mt-5">Vous n'avez pas d'éléments dans cette collection !</h1>
+    <h3 class="text-center">Ajoutez-en et venez contempler votre belle médiathèque ! :)</h3>
+    <div class="container text-center">
+    <img class="center" src="https://www.covoiturage-simple.com/images/oups.png" alt="">
+
+
+{% endif %}
+
+
+{% endblock %}

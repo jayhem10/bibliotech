@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        <link rel="stylesheet" href="https://bootswatch.com/4/lux/bootstrap.min.css">
+        <link rel="stylesheet" href="{{ asset('css/style.css')}}">
+        <script src="https://kit.fontawesome.com/bda8027245.js" crossorigin="anonymous"></script>
+        {% block stylesheets %}{% endblock %}
+    </head>
+    <body>
+        <nav class = "navbar navbar-expand-lg navbar-dark bg-primary">
+            <a class="navbar-brand" href="{{ path('home')}}"> <font style = "vertical-align: inherit;"> Biblio'Tech </font> </font> </a>
+            <button class = "navbar-toggler" type = "button" data-toggle = "collapse" data-target = "# navbarColor01" aria-controls = "navbarColor01" aria-extended = "false" aria-label = "Basculer la navigation ">
+              <span class = "navbar-toggler-icon"> </span>
+            </button>
+          
+            <div class = "collapse navbar-collapse" id = "navbarColor01">
+              <ul class = "navbar-nav mr-auto">
+
+                {% if app.user %}
+                <li class = "nav-item">
+                  <a class="nav-link" href="{{ path('collection')}}"> <font style = "vertical-align: inherit;"> Ma collection </font> </a>
+                </li>
+                <li class = "nav-item">
+                  <a class="nav-link" href="{{ path('collection_create')}}"> <font style = "vertical-align: inherit;">  Enrichir ma collection</font></a>
+                </li>
+                <li class = "nav-item">
+                  <a class="nav-link" href="{{ path('other_users')}}"> <font style = "vertical-align: inherit;">Les autres collectionneurs</font></a>
+                </li>
+              
+                {% endif %}
+
+                {% if not app.user %}
+                <li class = "nav-item">
+                  <a class="nav-link" href="{{ path('security_login')}}"> <font style = "vertical-align: inherit;"> Connexion</font> </font> </a>
+                </li>
+                {% endif %}
+
+
+                {% if not app.user %}
+                <li class = "nav-item">
+                  <a class="nav-link" href="{{ path('security_registration')}}"> <font style = "vertical-align: inherit;"> Inscription</font> </font> </a>
+                </li>
+                {% endif %}
+              </ul>
+
+              {% if app.user %}
+              <div class="dropdown show nav-item">
+                <a class="btn  dropdown-toggle pr-5 mr-3" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                  <img src="https://png.pngtree.com/svg/20170823/e0c05c039e.png" style="width: 35px;" alt="">
+                </a>
+              
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                  <a class="dropdown-item" href="{{ path('account')}}">Mon profil</a>
+                  <a class="dropdown-item" href="#">Infos</a>
+                  <a class="dropdown-item" href="{{ path('security_logout')}}">Se déconnecter</a>
+                </div>
+              </div>
+              {% endif %}
+            </div>
+          </nav>
+
+       
+                {% block body %}{% endblock %}
+
+                {% if app.user %}
+  
+
+                
+                      <div class="container-fluid">
+                        <div class="footer-copy text-center my-5 text-primary  ">© 2020 Copyright:
+                          <a class="" href="https://www.instagram.com/jayhem10/?hl=fr" target="_blank"> Jérémy Noble</a>
+                        </div>
+                      </div>
+                    {% endif %}
+
+      <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+        {% block javascripts %}{% endblock %}
+    </body>
+</html>

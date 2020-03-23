@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+
+{% if users  %}
+
+<div class="container text-center my-5">
+<h1>Découvrez ici les autres utilisateurs</h1>
+<h3>Regardez leurs collections et suivez les pour les retrouver facilement !</h3>
+<form>
+    <div class="input-group my-5">
+        <input type="text"
+               name="s"
+               class="form-control"
+               placeholder="Search..."
+        >
+        <div class="input-group-append">
+            <button type="submit" class="btn btn-primary">Submit</button>
+</div>
+    </div>
+</form>
+</div>
+
+
+
+
+            {% for user in users %}
+
+           
+
+        <div class="container">
+
+            <div class="text center">
+                    <a href="{{ path('this_user', {'id':user.id}) }}"><h3>{{user.pseudo}}</h3></a>
+            </div>
+        </div>
+
+        {% endfor %}
+
+    {% else %}
+
+    <div class="text-center my-5">
+        <h1 class="text-center">Votre recherche n'a rien donnée :/</h1>
+        <a href="{{ path('other_users')}}" class="btn btn-outline-dark mt-5">Retour</a>
+    </div>
+    {% endif %}
+
+
+
+{% endblock %}
+
+

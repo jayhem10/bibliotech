@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+<div class="container">
+    <h1 class="my-5">Inscris-toi et gère ta bibliothèque ! </h1>
+
+        {{ form_start(form) }}
+
+        {{ form_row(form.pseudo, {'label':'Nom d\'utilisateur', 'attr' : {'placeholder':"Choisissez un pseudo"}}) }}
+        {{ form_row(form.email, {'attr' : {'placeholder':"Votre adresse courriel"}}) }}
+        {{ form_row(form.password, {'attr' : {'placeholder':"Votre mot de passe"}}) }}
+        {{ form_row(form.confirm_password, {'attr' : {'placeholder':"Confirmez votre mot de passe"}}) }}
+
+
+    <button type="submit" class="btn btn-info">Je m'inscris</button>
+
+    {{ form_end(form) }}
+
+</div>
+{% endblock %}
+
