@@ -68,17 +68,17 @@
   <div class="container">
     <section class="articles my-5">
         <div class="row">
-            {% for vinyle in vinyles|slice(0,18) %}
+            {% for pagevinyle in pagevinyles %}
                 <div class="col-4 col-md-6 col-sm-12 text-center">
                     <articles>
-                        <h2 class="mt-5">{{vinyle.title}}</h2>
-                        <h4>{{vinyle.category.title}}</h4>
-                        <div class="metadata">{{vinyle.year}}</div>
+                        <h2 class="mt-5">{{pagevinyle.title}}</h2>
+                        <h4>{{pagevinyle.category.title}}</h4>
+                        <div class="metadata">{{pagevinyle.year}}</div>
                         <div class="content">
-                            <img src="{{vinyle.image}}" width="300px" height="auto" alt="">
-                            <div> {{vinyle.author | raw}} </div>
-                            <div>{{vinyle.reference | raw}}</div>
-                            <a href="{{ path('site_show' , {'id':vinyle.id}) }}" class="btn btn-primary">lire la suite</a>
+                            <img src="{{pagevinyle.image}}" width="300px" height="auto" alt="">
+                            <div> {{pagevinyle.author | raw}} </div>
+                            <div>{{pagevinyle.reference | raw}}</div>
+                            <a href="{{ path('site_show' , {'id':pagevinyle.id}) }}" class="btn btn-primary">lire la suite</a>
                         </div>
                     </articles>
                 </div>
@@ -86,6 +86,13 @@
         </div>
     </section>
 </div>
+
+<div class="d-flex justify-content-center">
+    <div class="navigation">
+        {{ knp_pagination_render(pagevinyles)}}
+    </div>
+</div>
+
 
     {% else %}
 

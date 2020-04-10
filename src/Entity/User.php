@@ -15,6 +15,10 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * fields={"email"},
  * message= "L'email que vous avez indiqué est déjà utilisé"
  * )
+ * @UniqueEntity(
+ * fields={"pseudo"},
+ * message= "Le pseudo que vous avez indiqué est déjà utilisé"
+ * )
  */
 class User implements UserInterface
 {
@@ -52,9 +56,28 @@ class User implements UserInterface
      */
     private $collection;
 
+    /**
+     *  @var string le token qui servira lors de l'oubli de mot de passe
+     * 
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $reset_token;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $activation_token;
+
+
+
+
+
     public function __construct()
     {
         $this->collection = new ArrayCollection();
+        $this->follows = new ArrayCollection();
+        $this->following = new ArrayCollection();
+        $this->follower = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -127,26 +150,31 @@ class User implements UserInterface
         return $this->collection;
     }
 
-    public function addCollection(Collection $collection): self
+
+    public function getResetToken(): ?string
     {
-        if (!$this->collection->contains($collection)) {
-            $this->collection[] = $collection;
-            $collection->setUser($this);
-        }
+        return $this->reset_token;
+    }
+
+    public function setResetToken(?string $reset_token): self
+    {
+        $this->reset_token = $reset_token;
 
         return $this;
     }
 
-    public function removeCollection(Collection $collection): self
+    public function getActivationToken(): ?string
     {
-        if ($this->collection->contains($collection)) {
-            $this->collection->removeElement($collection);
-            // set the owning side to null (unless already changed)
-            if ($collection->getUser() === $this) {
-                $collection->setUser(null);
-            }
-        }
+        return $this->activation_token;
+    }
+
+    public function setActivationToken(?string $activation_token): self
+    {
+        $this->activation_token = $activation_token;
 
         return $this;
     }
+
+
+
 }

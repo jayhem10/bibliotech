@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Utilisateur suivis{% endblock %}
+
+
+
+{% block body %}
+
+<div class="container my-5">
+    {% for message in app.flashes('follow') %}
+        <div class="alert-info text-center mt-3" role="alert">
+            {{ message }}
+        </div>
+    {% endfor %}
+</div>
+
+<div class="container my-5">
+    {% for message in app.flashes('unfollow') %}
+        <div class="alert-danger text-center mt-3" role="alert">
+            {{ message }}
+        </div>
+    {% endfor %}
+</div>
+{% if users  %}
+
+<div class="container text-center my-5">
+    <h1>Les utilisateurs que vous suivez sont ici :)</h1>
+        <h3> Si vous en avez trop, une petite recherche vous simplifiera la vie !</h3>
+            <form>
+                <div class="input-group my-5">
+                    <input type="text"
+                        name="s"
+                        class="form-control"
+                        placeholder="Search..."> 
+                            <div class="input-group-append">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                </div>
+            </form>
+</div>
+
+<div class="container">
+        <div class="row">
+                    {% for user in users  %}
+                        <div class="text-center mt-3 col-4 ">
+                            <a href="{{ path('this_user', {'id':user.following.id}) }}"><h3>{{user.following.pseudo}}</h3></a>
+                        </div>
+                    {% endfor %}
+        </div>
+    </div>
+
+
+
+
+    {% else %}
+
+    <div class="text-center my-5">
+        <h1 class="text-center">Vous n'avez pas d'utilisateurs suivis ou votre recherche n'a rien donnée</h1>
+        <a href="{{ path('other_users')}}" class="btn btn-outline-dark mt-5">Retour</a>
+    </div>
+    {% endif %}
+
+
+
+{% endblock %}

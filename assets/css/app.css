@@ -1,3 +1,6 @@
+
+@import url("/bootstrap.min.css");
+
 html {
     position: relative;
     min-height: 100%;
@@ -31,4 +34,6 @@ html {
 
   }
 
-  
+  strong{
+   color: blue;
+  }

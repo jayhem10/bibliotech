@@ -7,6 +7,7 @@
 {% block body %}
 
 
+
 {% if app.user %}
 
 <h1 class="my-5 text-center">Bienvenue {{ app.user.pseudo}}</h1>
@@ -69,17 +70,17 @@
 <div class="container">
     <section class="articles my-5">
         <div class="row">
-            {% for liste in listes|slice(0,18) %}
+            {% for pageliste in pagelistes %}
                 <div class="col-6 col-md-6 col-sm-12 text-center">
                     <articles>
-                        <h2 class="mt-5">{{liste.title}}</h2>
-                        <h4>{{liste.category.title}}</h4>
-                        <div class="metadata">{{liste.year}}</div>
+                        <h2 class="mt-5">{{pageliste.title}}</h2>
+                        <h4>{{pageliste.category.title}}</h4>
+                        <div class="metadata">{{pageliste.year}}</div>
                         <div class="content">
-                            <img src="{{liste.image}}" width="300px" height="auto" alt="">
-                            <div> {{liste.author | raw}} </div>
-                            <div>{{liste.reference | raw}}</div>
-                            <a href="{{ path('site_show' , {'id':liste.id}) }}" class="btn btn-primary">lire la suite</a>
+                            <img src="{{pageliste.image}}" width="300px" height="auto" alt="">
+                            <div> {{pageliste.author | raw}} </div>
+                            <div>{{pageliste.reference | raw}}</div>
+                            <a href="{{ path('site_show' , {'id':pageliste.id}) }}" class="btn btn-primary">lire la suite</a>
                         </div>
                     </articles>
                 </div>
@@ -87,6 +88,14 @@
         </div>
     </section>
     </div>
+
+    
+<div class="d-flex justify-content-center">
+    <div class="navigation">
+        {{ knp_pagination_render(pagelistes)}}
+    </div>
+</div>
+      
 
 {% else %}
 

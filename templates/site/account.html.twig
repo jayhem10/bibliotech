@@ -27,7 +27,7 @@
             <div class="col col-lg-6 my-5">
                 <h4>Vous avez <u><a href="{{ path('collection')}}">{{listes|length}} objet(s)</a></u> dans votre collection !</h4>
             
-                            {% if listes|length >= 1 and listes|length <= 50 %}
+                            {% if listes|length >= 0 and listes|length <= 50 %}
                             <div class="text-center my-5">
                             <h4> Votre grade actuel est : Collectionneur en herbe</h4>
                             <img style="width: 32px;" src="{{ asset('images/star.png')}}" alt="">

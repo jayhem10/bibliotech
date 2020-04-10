@@ -68,17 +68,17 @@
     
     <section class="articles my-5 text-center">
         <div class="row">
-            {% for jeu in jeux|slice(0,18) %}
+            {% for pagejeu in pagejeux %}
                 <div class="col-4 col-md-6 col-sm-12">
                     <articles>
-                        <h2 class="mt-5">{{jeu.title}}</h2>
-                        <h4>{{jeu.category.title}}</h4>
-                        <div class="metadata">{{jeu.year}}</div>
+                        <h2 class="mt-5">{{pagejeu.title}}</h2>
+                        <h4>{{pagejeu.category.title}}</h4>
+                        <div class="metadata">{{pagejeu.year}}</div>
                         <div class="content">
-                            <img src="{{jeu.image}}" width="300px" height="auto" alt="">
-                            <div> {{jeu.author | raw}} </div>
-                            <div>{{jeu.reference | raw}}</div>
-                            <a href="{{ path('site_show' , {'id':jeu.id}) }}" class="btn btn-primary">lire la suite</a>
+                            <img src="{{pagejeu.image}}" width="300px" height="auto" alt="">
+                            <div> {{pagejeu.author | raw}} </div>
+                            <div>{{pagejeu.reference | raw}}</div>
+                            <a href="{{ path('site_show' , {'id':pagejeu.id}) }}" class="btn btn-primary">lire la suite</a>
                         </div>
                     </articles>
                 </div>
@@ -86,7 +86,11 @@
             </div>
         </section>
            
-
+        <div class="d-flex justify-content-center">
+            <div class="navigation">
+                {{ knp_pagination_render(pagejeux)}}
+            </div>
+        </div>
    
 
     {% else %}
