@@ -4,7 +4,7 @@
 
 {% block body %}
 
-<div class="container">
+<div class="container text-center">
 
         
                 <h1 class="my-5">Cet objet est dans la collection de {{collection.user.pseudo}}</h1>
@@ -20,7 +20,7 @@
 
 </div>
 
-<div class="container">
+<div class="container text-center my-5">
         
                 <a class="btn btn-primary" href="{{ path('collection_edit', { 'id': collection.id})}}" role="button">Editer</a>
                 <a class="btn btn-danger ml-3" href="{{ path('collection_delete', { 'id': collection.id})}}" role="button">Supprimer</a>

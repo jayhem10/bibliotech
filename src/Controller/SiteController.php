@@ -511,7 +511,7 @@ public function otherUser(EntityManagerInterface $manager, Request $request)
 
         return $this->render('site/info.html.twig', [
           'listes'=> $listes,
-          'site' => "Biblio'tech"
+          'site' => "Cogazer"
           
         ]);
     }
