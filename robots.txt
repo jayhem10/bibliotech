@@ -1,5 +1,4 @@
 # fichier pour les robots du site http://www.cogazer.com/
-User-Agent: * (autorise l’accès à tous les robots )
-Disallow: /login.php 
-Allow: /*.css?* 
+User-agent: *
+Allow: /
 Sitemap: http://www.cogazer.com/sitemap.xml
