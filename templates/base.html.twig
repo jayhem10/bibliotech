@@ -1,7 +1,19 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:og="http://ogp.me/ns#">
+  <html lang="fr">
     <head>
         <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="Gestionnaire de médiathéque en ligne: Gérer votre collection et ranger là de manière à retrouver chaque élément rapidement et ce, peu importe où vous êtes.">
+
+        <meta property="og:title" content="Cogazer" />
+        <meta property="og:description" content="Gestionnaire de médiathéque en ligne: Gérer votre collection et rangez-la de manière à retrouver chaque élément rapidement et ce, peu importe où vous êtes." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="http://cogazer.com/" />
+        <meta property="og:image" content="https://cogazer.com/images/exemple.png" />
+
+        <meta name="google-site-verification" content="9k9COGhv-24e7mDzcbF-VsR-RLpmkPyU57qRUrpIijY" />
+        
         <title>{% block title %}Welcome!{% endblock %}</title>
         <link rel="stylesheet" href="https://bootswatch.com/4/lux/bootstrap.min.css">
         <link rel="stylesheet" href="{{ asset('build/css/app.css') }}">
@@ -73,7 +85,7 @@
                 
                       <div class="container-fluid">
                         <div class="footer-copy text-center my-5 text-primary  ">© 2020 Copyright:
-                          <a class="" href="https://www.instagram.com/jayhem10/?hl=fr" target="_blank"> Jérémy Noble</a>
+                          <a class="" href="https://www.instagram.com/jayhem10/?hl=fr" target="_blank" rel= "noreferrer noopener" > Jérémy Noble</a>
                         </div>
                       </div>
                     {% endif %}

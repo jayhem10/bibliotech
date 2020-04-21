@@ -17,7 +17,7 @@
 
 {% endif %}
 
-<div class="container">
+<div class="container table-responsive">
 <table class="table">
     <thead>
       <tr>
@@ -46,26 +46,31 @@
       </tr>
     </thead>
   </table>
-
-  <form>
-    <div class="input-group my-5">
-        <input type="text"
-               name="q"
-               class="form-control"
-               placeholder="Search..."
-        >
-        <div class="input-group-append">
-            <button type="submit" class="btn btn-primary">Submit</button>
 </div>
-    </div>
-</form>
+
+
+<div class="container">
+    <form>
+        <div class="input-group my-5">
+            <input type="text"
+                       name="q"
+                       class="form-control"
+                       placeholder="Search..."
+            >
+            <div class="input-group-append">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+
 
 
 
   {% if blurays  %}
-
   <h4 class="text-center">Ici, vous avez {{blurays|length}} élément(s) de votre collection</h4>
-
+  <div class="container">
     <section class="articles my-5">
         <div class="row">
             {% for pagebluray in pageblurays %}
@@ -95,7 +100,7 @@
 
     {% else %}
 
-    <h1 class="">Vous n'avez pas d'éléments dans cette collection !</h1>
+    <h1 class="mt-5 text-center">Vous n'avez pas d'éléments dans cette collection !</h1>
     <h3 class="text-center mt-5">Ajoutez-en et venez contempler votre belle médiathèque ! :)</h3>
     <div class="container text-center">
     <img class="center" src="https://www.covoiturage-simple.com/images/oups.png" alt="">

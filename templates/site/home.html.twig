@@ -24,13 +24,13 @@
 {% else %}
 
 
-<h1 class="my-5 text-center">Bienvenue sur Biblio'tech, le seul gestionnaire de médiathèque en ligne!</h1>
+<h1 class="my-5 text-center">Bienvenue sur Cogazer, le seul gestionnaire de médiathèque en ligne!</h1>
 
 
 <div class="container my-5 d-flex">
     <div class="row align-items-center">
         <h2 class="col-12 col-lg-4 my-3 text-center">Inscris-toi et crée ta librairie culturelle en un rien de temps!</h2>
-        <img class="col-12 col-lg-8" src="{{ asset('images/exemple.png')}}" alt="">
+        <img class="col-12 col-lg-8 img-fluid" src="{{ asset('images/exemple.png')}}" width="50" height="50" alt="cogazer">
     </div>
 </div>
 
@@ -44,7 +44,7 @@
 
 <div class="container d-flex">
     <div class="row align-items-center">
-        <img class="col-12 col-lg-8" src="{{ asset('images/form.png')}}" alt="">
+        <img class="col-12 col-lg-8" src="{{ asset('images/form.png')}}" loading="auto" width="100%" height="auto" alt="formulaire">
         <h2 class="col-12 col-lg-4 text-center my-3">Peut gérer diverses collections, et ce, grâce à un seul formulaire!</h2>
     </div>
 </div>
@@ -60,14 +60,14 @@
 <div class="container d-flex">
     <div class="row align-items-center">
         <h2 class="col-12 col-lg-6 my-5 text-center">Ayez accès n'importe où à votre collection et faites le bon achat pour la compléter :)</h2>
-        <img class="col-12 col-lg-6" style="width: 50px;" src="{{ asset('images/vinyle.jpg')}}" alt="">
+        <img class="col-12 col-lg-6" loading="auto" width="100%" height="auto" src="{{ asset('images/vinyle.jpg')}}" alt="vinyle">
        
     </div>
 </div>
 
 
 
-<div class=" container-fluid footer mt-5">
+<div class=" container-fluid footer">
     <div class="page-footer font-small ">
 
               <!-- Footer Elements -->
@@ -78,19 +78,19 @@
                   <li class="list-inline-item">
                     <h5 class="mb-1">Register for free</h5>
                   </li>
-                  <li class="list-inline-item">
+                  <li class="list-inline-item mt-3">
                     <a href="{{ path('security_registration')}}" class="btn btn-outline-dark">Sign up!</a>
                   </li>
                 </ul>
                 <!-- Call to action -->
-            
               </div>
+              
 
                 <!-- Footer Elements -->
                         
                 <!-- Copyright -->
                 <div class="container-fluid">
-                    <div class="footer-copyright text-center my-5 text-primary  ">© 2020 Copyright:
+                    <div class="footer-copyright text-center my-5 text-primary">© 2020 Copyright:
                       <a class="" href="https://www.instagram.com/jayhem10/?hl=fr" target="_blank"> Jérémy Noble</a>
                     </div>
                   </div>
