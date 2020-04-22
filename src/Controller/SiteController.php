@@ -2,27 +2,29 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use App\Entity\User;
+use App\Entity\Follow;
+use App\Entity\Category;
+use App\Entity\Wishlist;
+use App\Form\FollowType;
+use App\Form\ElementType;
+use App\Entity\Collection;
+
+
+
+
+use App\Form\WishlistType;
+use App\Repository\UserRepository;
+use App\Repository\FollowRepository;
+use App\Repository\CategoryRepository;
+use App\Repository\CollectionRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\HttpFoundation\Request;
-use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-
-
-
-
-use App\Entity\Collection;
-use App\Entity\User;
-use App\Entity\Category;
-use App\Entity\Follow;
-use App\Repository\CollectionRepository;
-use App\Repository\UserRepository;
-use App\Repository\CategoryRepository;
-use App\Repository\FollowRepository;
-use App\Form\ElementType;
-use App\Form\FollowType;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class SiteController extends Controller
 {
@@ -454,10 +456,6 @@ public function otherUser(EntityManagerInterface $manager, Request $request)
         }
     }
 
-
-         
-
-
         return $this->render('site/thisuser.html.twig', [
           'formCollection' => $form->createView(),
           'level' => $userLevel,
@@ -541,5 +539,167 @@ public function otherUser(EntityManagerInterface $manager, Request $request)
          ]);
      }
 
+
+
+                                            //  GESTION DE LA WISHLIST !!!!!
+
+
+
+
+       // Je place la route new avant la collection id pour éviter que collection/new soit considéré en tant que id et non en tant que route à part
+
+        /**
+     * @Route("/wishlist/new", name="wishlist_create")
+     * @Route("/wishlist/{id}/edit", name="wishlist_edit")
+     */
+    public function formWish(Wishlist $element = null, Request $request, EntityManagerInterface $manager){
+
+
+
+        if(!$element){
+
+            $element = new Wishlist();
+
+        }
+
+        // Je veux récupérer l'id de l'user (TEST)
+        // $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $user = $this->getUser();
+        
+        
+
+            $form = $this->createForm(WishlistType::class, $element);
+                            
+
+            $form->handleRequest($request);
+
+            if($form->isSubmitted() && $form->isValid()){
+                $element -> setUser($user);
+                $manager->persist($element);
+                $manager->flush();
+
+                $this->addFlash('wishadd', 'Cet élément a bien été ajouté à votre wishlist');
+
+                return $this->redirectToRoute('wish_show', ['id'=> $element->getId()]);
+            }
+
+
+        return $this->render('site/wishlistcreate.html.twig',[
+            'formCollection' => $form->createView(),
+            'editMode' => $element->getId() !== null
+            
+            
+        ]);
+
+    }
+
+    /**
+     * @Route("/wishlist/{id}", name="wish_show")
+     */
+    public function Wishshow($id)
+    {
+        $repo = $this->getDoctrine()->getRepository(Wishlist::class);
+        $element = $repo->find($id);
+
+        return $this->render('site/wishshow.html.twig' ,[
+            'collection'=> $element
+        ]);
+    }
+
+    /**
+     * @Route("/wishlist", name="wishlist")
+     */
+    public function WishIndex(EntityManagerInterface $manager,  Request $request)
+    {
+
+    
+        // Je récupère l'ID de l'user connecté pour n'afficher que ses propres éléments de collection
+        // $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $user = $this->getUser()->getId();
+
+        $q = $request->query->get('q');
+
+        // Je crée la requête DQL qui récupère dans la table collection les éléments en rapport avec l'id de l'utilisateur connecté
+        $listes = $manager->createQuery("SELECT w FROM App\Entity\Wishlist w WHERE w.user = $user AND w.title LIKE '%$q%' ORDER BY w.id DESC")->getResult(); 
+
+        $pagelistes = $this->get('knp_paginator')->paginate(
+            // Doctrine Query, not results
+            $listes,
+            // Definir le parametre de la page
+            $request->query->getInt('page', 1),
+                // Nombre d'objets par page
+            18
+        );
+
+        // Je récupère la catégorie des éléments
+        $cat = $manager->createQuery("SELECT k FROM App\Entity\Category k")->getResult();          
+
+        return $this->render('site/wishlist.html.twig', [
+            'listes' => $listes,
+            'pagelistes'=> $pagelistes,
+            'cat' => $cat,
+          
+        ]);
+    }
+
+
+                        // SUPPRESSION ELEMENT WISHLIST
+
+/**
+*@Route("/wishlist/delete/{id}", name="wishlist_delete")
+*/
+public function wishDelete($id)
+{
+    $repo = $this->getDoctrine()->getManager();
+    $element = $repo->getRepository(Wishlist::class)->find($id);
+
+
+
+    if( isset($_POST['confirm'])){
+
+        $repo->remove($element);
+        $repo->flush();
+        return $this->redirectToRoute('wishlist');
+
+        $this->addFlash('wishdelete', 'Cet élément a bien été supprimé de votre wishlist');
+    }
+
+
+
+    return $this->render('site/wishlistdelete.html.twig' ,[
+        'collection'=> $element
+    ]);
+}
+
+
+
+                                        // WISHLIST DES AUTRES USERS
+/**
+*@Route("/theirwishes/{id}", name="their_wishes")
+*/
+public function otherWishlist(EntityManagerInterface $manager, Request $request, $id)
+{
+
+    $s = $request->query->get('u');
+
+       
+    $userCollection = $manager->createQuery("SELECT w FROM App\Entity\Wishlist w WHERE  w.user = $id AND w.title LIKE '%$s%' ORDER BY w.id DESC")->getResult(); 
+
+
+    $pagelistes = $this->get('knp_paginator')->paginate(
+        // Doctrine Query, not results
+        $userCollection,
+        // Definir le parametre de la page
+        $request->query->getInt('page', 1),
+            // Nombre d'objets par page
+        18
+    );
+
+    return $this->render('site/theirwishes.html.twig' ,[
+       'listes'=> $userCollection,
+       'pagelistes' => $pagelistes,
+
+    ]);
+}
 
 }

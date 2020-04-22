@@ -8,12 +8,12 @@
 
 {% if editMode %}
 <div class="container">
-    <h1 class="my-5 text-center">Modifier votre élément ! </h1>
+    <h1 class="my-5">Modifier votre élément ! </h1>
 </div>
 
 {% else %}
 <div class="container">
-    <h1 class="my-5 text-center">Ajouter un élément à votre collection !</h1>
+    <h1 class="my-5">Ajouter un élément à votre collection !</h1>
 </div>
 {% endif %}
 
@@ -23,11 +23,9 @@
 {{ form_row(formCollection.title, {'attr' : {'placeholder':"Nom de l'élément"}}) }}
 {{ form_row(formCollection.author, {'attr' : {'placeholder':"Qui est le créateur de cette oeuvre?"}}) }}
 {{ form_row(formCollection.edition, {'attr' : {'placeholder':"Maison d'édition, le label, la plateforme de jeu, ..."}}) }}
-{{ form_row(formCollection.reference, {'attr' : {'placeholder':"Le code ou référence de l'oeuvre"}}) }}
 {{ form_row(formCollection.category) }}
-{{ form_row(formCollection.year, {'attr' : {'placeholder':"Date de sortie"}}) }}
 {{ form_row(formCollection.image, {'attr' : {'placeholder':"URL complet vers une image de l'élément"}}) }}
-{{ form_row(formCollection.note, {'attr' : {'placeholder':"Votre note"}}) }}
+
 
 
 

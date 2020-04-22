@@ -1,0 +1,73 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Wishlist{% endblock %}
+
+
+
+{% block body %}
+
+<h1 class="text-center my-5">Bienvenue sur votre wishlist</h1>
+
+<h2 class="text-center my-5">Que ces éléments ne perdurent pas ici longtemps :)</h2>
+
+<h4 class="text-center">Votre wishlist comporte {{pagelistes|length}} élément(s)</h4>
+
+
+
+<form class="container">
+    <div class="input-group my-5">
+        <input type="text"
+               name="q"
+               class="form-control"
+               placeholder="Search..."
+        >
+        <div class="input-group-append">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+    </div>
+</form>
+</div>
+
+{% if pagelistes  %}
+<div class="container">
+    <section class="articles my-5">
+        <div class="row">
+            {% for pageliste in pagelistes %}
+                <div class="col-12 col-lg-6 text-center">
+                    <articles>
+                        <h2 class="mt-5">{{pageliste.title}}</h2>
+                        <h4>{{pageliste.category.title}}</h4>
+                        <div class="content">
+                            <img src="{{pageliste.image}}" width="300px" height="auto" alt="">
+                            <div> {{pageliste.author | raw}} </div>
+                            <a href="{{ path('wish_show' , {'id':pageliste.id}) }}" class="btn btn-primary">lire la suite</a>
+                        </div>
+                    </articles>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+    </div>
+
+    
+<div class="d-flex justify-content-center">
+    <div class="navigation">
+        {{ knp_pagination_render(pagelistes)}}
+    </div>
+</div>
+      
+
+{% else %}
+
+    <h1 class="text-center">Vous n'avez pas d'éléments dans cette collection !</h1>
+    <h3 class="text-center mt-5">Ajoutez-en et venez contempler votre belle médiathèque ! :)</h3>
+    <div class="container text-center">
+    <img class="center" src="https://www.covoiturage-simple.com/images/oups.png" alt="">
+
+
+{% endif %}
+
+
+    
+
+{% endblock %}

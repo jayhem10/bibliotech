@@ -42,7 +42,7 @@
 <div class="container">
         <div class="row">
                     {% for user in users  %}
-                        <div class="text-center mt-3 col-4 ">
+                        <div class="text-center mt-3 col-4 col-6 col-lg-4 ">
                             <a href="{{ path('this_user', {'id':user.following.id}) }}"><h3>{{user.following.pseudo}}</h3></a>
                         </div>
                     {% endfor %}

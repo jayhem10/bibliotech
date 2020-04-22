@@ -7,7 +7,7 @@
 <div class="container text-center">
 
         
-                <h1 class="my-5">Cet objet est dans la collection de {{collection.user.pseudo}}</h1>
+                <h1 class="my-5">Cet objet est dans votre <u><a href="{{ path('collection')}}">collection</a></u> de {{collection.user.pseudo}}</h1>
                 <h2 class="mt-5"> {{collection.title}}</h2>
                 <div class="metadata">{{collection.year | raw}}</div>
                 <div class="content">

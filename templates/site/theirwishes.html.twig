@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+
+   
+
+        {% for liste in pagelistes|slice(0,1) %}
+        <h1 class="text-center my-5">Vous êtes sur la wishlist de {{liste.user.pseudo}}</h1>
+        {% endfor  %}
+
+        {% if listes  %}
+        <div class="container">
+                <form>
+                    <div class="input-group my-5">
+                        <input type="text"
+                            name="u"
+                            class="form-control"
+                            placeholder="Search..."
+                        >
+                        <div class="input-group-append">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+    
+
+            <div class="container">
+                <section class="articles my-5">
+                    <div class="row">
+                        {% for pageliste in pagelistes|slice(0,18) %}
+                            <div class="col-12 col-lg-6 text-center">
+                                <articles>
+                                    <h2 class="mt-5">{{pageliste.title}}</h2>
+                                    <h4>{{pageliste.category.title}}</h4>
+                                    <div class="content">
+                                        <img src="{{pageliste.image}}" width="300px" height="auto" alt="">
+                                        <div> {{pageliste.author | raw}} </div>
+                                        
+                                    </div>
+                                </articles>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </section>
+                </div>
+
+                <div class="d-flex justify-content-center">
+                    <div class="navigation">
+                        {{ knp_pagination_render(pagelistes)}}
+                    </div>
+        </div>
+
+    {% else %}
+
+        <h1 class="text-center mt-5">Cet utilisateur n'a pas encore d'éléments dans sa wishlist !</h1>
+        <h3 class="text-center mt-5">Revenez bientôt pour connaître ses envies</h3>
+
+    {% endif %}
+
+
+{% endblock %}

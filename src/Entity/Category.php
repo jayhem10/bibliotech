@@ -33,9 +33,15 @@ class Category
      */
     private $collections;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Wishlist", mappedBy="category")
+     */
+    private $wishlists;
+
     public function __construct()
     {
         $this->collections = new ArrayCollection();
+        $this->wishlists = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -92,6 +98,37 @@ class Category
             // set the owning side to null (unless already changed)
             if ($collection->getCategory() === $this) {
                 $collection->setCategory(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Wishlist[]
+     */
+    public function getWishlists(): Collection
+    {
+        return $this->wishlists;
+    }
+
+    public function addWishlist(Wishlist $wishlist): self
+    {
+        if (!$this->wishlists->contains($wishlist)) {
+            $this->wishlists[] = $wishlist;
+            $wishlist->setCategory($this);
+        }
+
+        return $this;
+    }
+
+    public function removeWishlist(Wishlist $wishlist): self
+    {
+        if ($this->wishlists->contains($wishlist)) {
+            $this->wishlists->removeElement($wishlist);
+            // set the owning side to null (unless already changed)
+            if ($wishlist->getCategory() === $this) {
+                $wishlist->setCategory(null);
             }
         }
 

@@ -68,6 +68,11 @@ class User implements UserInterface
      */
     private $activation_token;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Wishlist", mappedBy="user")
+     */
+    private $wishlists;
+
 
 
 
@@ -78,6 +83,7 @@ class User implements UserInterface
         $this->follows = new ArrayCollection();
         $this->following = new ArrayCollection();
         $this->follower = new ArrayCollection();
+        $this->wishlists = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -171,6 +177,37 @@ class User implements UserInterface
     public function setActivationToken(?string $activation_token): self
     {
         $this->activation_token = $activation_token;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Wishlist[]
+     */
+    public function getWishlists(): Collection
+    {
+        return $this->wishlists;
+    }
+
+    public function addWishlist(Wishlist $wishlist): self
+    {
+        if (!$this->wishlists->contains($wishlist)) {
+            $this->wishlists[] = $wishlist;
+            $wishlist->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeWishlist(Wishlist $wishlist): self
+    {
+        if ($this->wishlists->contains($wishlist)) {
+            $this->wishlists->removeElement($wishlist);
+            // set the owning side to null (unless already changed)
+            if ($wishlist->getUser() === $this) {
+                $wishlist->setUser(null);
+            }
+        }
 
         return $this;
     }

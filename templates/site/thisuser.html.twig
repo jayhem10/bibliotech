@@ -60,10 +60,9 @@
             Ne plus suivre
         </button>
         {% endif %}
-        
-    
-    
     {{ form_end(formCollection) }}
+
+    <a href="{{ path('their_wishes' , {'id':liste.user.id}) }}" class="btn btn-primary">Sa wishlist</a>
     
     </div>
 
@@ -90,7 +89,7 @@
     <section class="articles my-5">
         <div class="row">
             {% for pageliste in pagelistes|slice(0,18) %}
-                <div class="col-3 col-md-6 col-sm-12 text-center">
+                <div class="col-12 col-lg-6 text-center">
                     <articles>
                         <h2 class="mt-5">{{pageliste.title}}</h2>
                         <h4>{{pageliste.category.title}}</h4>
@@ -115,10 +114,8 @@
 
 {% else %}
 
-    <h1 class="text-center mt-5">Vous n'avez pas d'éléments dans cette collection !</h1>
-    <h3 class="text-center">Ajoutez-en et venez contempler votre belle médiathèque ! :)</h3>
-    <div class="container text-center">
-    <img class="center" src="https://www.covoiturage-simple.com/images/oups.png" alt="">
+<h1 class="text-center mt-5">Cet utilisateur n'a pas encore d'éléments dans sa collection !</h1>
+<h3 class="text-center mt-5">Revenez bientôt pour contempler ses collections</h3>
 
 
 {% endif %}

@@ -33,10 +33,13 @@
 
                 {% if app.user %}
                 <li class = "nav-item">
-                  <a class="nav-link" href="{{ path('collection')}}"> <font style = "vertical-align: inherit;"> Ma collection </font> </a>
+                  <a class="nav-link" href="{{ path('collection')}}"> <font style = "vertical-align: inherit;">Ma collection </font> </a>
                 </li>
                 <li class = "nav-item">
-                  <a class="nav-link" href="{{ path('collection_create')}}"> <font style = "vertical-align: inherit;">  Enrichir ma collection</font></a>
+                  <a class="nav-link" href="{{ path('collection_create')}}"> <font style = "vertical-align: inherit;">Enrichir ma collection</font></a>
+                </li>
+                <li class = "nav-item">
+                  <a class="nav-link" href="{{ path('wishlist_create')}}"> <font style = "vertical-align: inherit;">Aggrémenter ma wishlist</font></a>
                 </li>
                 <li class = "nav-item">
                   <a class="nav-link" href="{{ path('other_users')}}"> <font style = "vertical-align: inherit;">Les autres collectionneurs</font></a>
@@ -68,6 +71,7 @@
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                   <a class="dropdown-item" href="{{ path('account')}}">Mon profil</a>
                   <a class="dropdown-item" href="{{ path('follow')}}">Mes abonnements</a>
+                  <a class="dropdown-item" href="{{ path('wishlist')}}">Ma wishlist</a>
                   <a class="dropdown-item" href="{{ path('account_info')}}">Infos</a>
                   <a class="dropdown-item" href="{{ path('security_logout')}}">Se déconnecter</a>
                 </div>

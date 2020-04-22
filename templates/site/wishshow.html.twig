@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+
+
+{% block body %}
+
+
+<div class="container my-5">
+        {% for message in app.flashes('wishadd') %}
+            <div class="alert-info text-center mt-3" role="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
+    </div>
+
+<div class="container text-center">
+
+        
+                <h1 class="my-5">Cet objet est dans votre <u><a href="{{ path('wishlist')}}">wishlist</a></u> {{collection.user.pseudo}}</h1>
+                <h2 class="mt-5"> {{collection.title}}</h2>
+                
+                <div class="content">
+                        <img src="{{collection.image}}" class="img-thumbnail"  alt="">
+                        <p>{{collection.author | raw}}</p>
+                       
+                        <p>{{collection.edition | raw}}</p>
+                </div>
+
+</div>
+
+<div class="container text-center my-5">
+        
+                <a class="btn btn-primary" href="{{ path('wishlist_edit', { 'id': collection.id})}}" role="button">Editer</a>
+                <a class="btn btn-danger ml-3" href="{{ path('wishlist_delete', { 'id': collection.id})}}" role="button">Supprimer</a>
+        
+</div>
+
+{% endblock %}
