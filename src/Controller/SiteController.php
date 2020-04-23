@@ -25,6 +25,8 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 class SiteController extends Controller
 {
@@ -32,6 +34,7 @@ class SiteController extends Controller
 
     /**
      * @Route("/collection", name="collection")
+     * @IsGranted("ROLE_USER")
      */
     public function index(EntityManagerInterface $manager,  Request $request)
     {
@@ -70,6 +73,7 @@ class SiteController extends Controller
 
     /**
      * @Route("/", name="home")
+     * 
      */
     public function home()
     {
@@ -78,11 +82,10 @@ class SiteController extends Controller
 
 
     
-    // Je place la route new avant la collection id pour éviter que collection/new soit considéré en tant que id et non en tant que route à part
 
-        /**
+     /**
      * @Route("/collection/new", name="collection_create")
-     * @Route("/collection/{id}/edit", name="collection_edit")
+     * @IsGranted("ROLE_USER")
      */
     public function form(Collection $element = null, Request $request, EntityManagerInterface $manager){
 
@@ -123,11 +126,52 @@ class SiteController extends Controller
 
     }
     
+    /**
+    * @Route("/collection/{id}/edit", name="collection_edit")
+    * 
+    * @Security("is_granted('ROLE_USER') and user === element.getUser()")
+    * 
+    */
+   public function formEdit(Collection $element = null, Request $request, EntityManagerInterface $manager){
+
+
+
+  
+
+       // Je veux récupérer l'id de l'user (TEST)
+       // $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+       $user = $this->getUser();
+       
+       
+
+           $form = $this->createForm(ElementType::class, $element);
+                           
+
+           $form->handleRequest($request);
+
+           if($form->isSubmitted() && $form->isValid()){
+               $element -> setUser($user);
+               $manager->persist($element);
+               $manager->flush();
+
+               return $this->redirectToRoute('site_show', ['id'=> $element->getId()]);
+           }
+
+
+       return $this->render('site/create.html.twig',[
+           'formCollection' => $form->createView(),
+           'editMode' => $element->getId() !== null
+           
+           
+       ]);
+
+   }
 
 
 
 /**
 * @Route("/collection/CD", name="category_cd")
+*@IsGranted("ROLE_USER")
 */
     public function cd(EntityManagerInterface $manager, Request $request)
     {
@@ -156,6 +200,7 @@ class SiteController extends Controller
 
 /**
 * @Route("/collection/jeux", name="category_jeux")
+*@IsGranted("ROLE_USER")
 */
     public function jeux(EntityManagerInterface $manager, Request $request)
     {
@@ -184,6 +229,7 @@ class SiteController extends Controller
 
 /**
 * @Route("/collection/livre", name="category_livre")
+*@IsGranted("ROLE_USER")
 */
     public function livre(EntityManagerInterface $manager, Request $request)
     {
@@ -214,6 +260,7 @@ class SiteController extends Controller
 
 /**
 *@Route("/collection/bluray", name="category_bluray")
+*@IsGranted("ROLE_USER")
 */
     public function bluRay(EntityManagerInterface $manager, Request $request)
     {
@@ -243,6 +290,7 @@ class SiteController extends Controller
 
 /**
 * @Route("/collection/dvd", name="category_dvd")
+*@IsGranted("ROLE_USER")
 */
     public function dvd(EntityManagerInterface $manager, Request $request)
     {
@@ -272,6 +320,7 @@ class SiteController extends Controller
 
         /**
      * @Route("/collection/vinyle", name="category_vinyle")
+     * @IsGranted("ROLE_USER")
      */
     public function vinyle(EntityManagerInterface $manager, Request $request)
     {
@@ -302,6 +351,7 @@ class SiteController extends Controller
 
     /**
      * @Route("/collection/{id}", name="site_show")
+     * *@IsGranted("ROLE_USER")
      */
     public function show($id)
     {
@@ -316,9 +366,11 @@ class SiteController extends Controller
     }
 
 /**
-*@Route("/collection/delete/{id}", name="collection_delete")
+* @Route("/collection/delete/{id}", name="collection_delete")
+*
+* @Security("is_granted('ROLE_USER') and user === element.getUser()")
 */
-    public function delete($id)
+    public function delete($id, Collection $element)
     {
         $repo = $this->getDoctrine()->getManager();
         $element = $repo->getRepository(Collection::class)->find($id);
@@ -342,6 +394,7 @@ class SiteController extends Controller
 
 /**
 *@Route("/others", name="other_users")
+*@IsGranted("ROLE_USER")
 */
 public function otherUser(EntityManagerInterface $manager, Request $request)
 {
@@ -371,6 +424,7 @@ public function otherUser(EntityManagerInterface $manager, Request $request)
 
 /**
 * @Route("/others/{id}", name="this_user")
+*@IsGranted("ROLE_USER")
 */
     public function userCollection(Follow $element = null, EntityManagerInterface $manager,  Request $request, $id)
     {
@@ -467,8 +521,10 @@ public function otherUser(EntityManagerInterface $manager, Request $request)
         ]);
     }
 
-        /**
+    /**
      * @Route("/account", name="account")
+     * 
+     * @IsGranted("ROLE_USER")
      */
     public function account(EntityManagerInterface $manager,  Request $request)
     {
@@ -492,6 +548,7 @@ public function otherUser(EntityManagerInterface $manager, Request $request)
 
     /**
      * @Route("/account/info", name="account_info")
+     * *@IsGranted("ROLE_USER")
      */
     public function info(EntityManagerInterface $manager,  Request $request)
     {
@@ -518,6 +575,7 @@ public function otherUser(EntityManagerInterface $manager, Request $request)
 
     /**
      * @Route("/account/follow", name="follow")
+     * *@IsGranted("ROLE_USER")
      */
      public function follow(EntityManagerInterface $manager,  Request $request)
      {
@@ -546,11 +604,11 @@ public function otherUser(EntityManagerInterface $manager, Request $request)
 
 
 
-       // Je place la route new avant la collection id pour éviter que collection/new soit considéré en tant que id et non en tant que route à part
+       
 
-        /**
+    /**
      * @Route("/wishlist/new", name="wishlist_create")
-     * @Route("/wishlist/{id}/edit", name="wishlist_edit")
+     * *@IsGranted("ROLE_USER")
      */
     public function formWish(Wishlist $element = null, Request $request, EntityManagerInterface $manager){
 
@@ -593,8 +651,58 @@ public function otherUser(EntityManagerInterface $manager, Request $request)
 
     }
 
+ /**
+ * @Route("/wishlist/{id}/edit", name="wishlist_edit")
+ * 
+ * @Security("is_granted('ROLE_USER') and user === element.getUser()")
+ */
+   
+    
+   public function formWishEdit(Wishlist $element = null, Request $request, EntityManagerInterface $manager){
+
+
+
+       if(!$element){
+
+           $element = new Wishlist();
+
+       }
+
+       // Je veux récupérer l'id de l'user (TEST)
+       // $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+       $user = $this->getUser();
+       
+       
+
+           $form = $this->createForm(WishlistType::class, $element);
+                           
+
+           $form->handleRequest($request);
+
+           if($form->isSubmitted() && $form->isValid()){
+               $element -> setUser($user);
+               $manager->persist($element);
+               $manager->flush();
+
+               $this->addFlash('wishadd', 'Cet élément a bien été ajouté à votre wishlist');
+
+               return $this->redirectToRoute('wish_show', ['id'=> $element->getId()]);
+           }
+
+
+       return $this->render('site/wishlistcreate.html.twig',[
+           'formCollection' => $form->createView(),
+           'editMode' => $element->getId() !== null
+           
+           
+       ]);
+
+   }
+
+
     /**
      * @Route("/wishlist/{id}", name="wish_show")
+     * @IsGranted("ROLE_USER")
      */
     public function Wishshow($id)
     {
@@ -606,8 +714,10 @@ public function otherUser(EntityManagerInterface $manager, Request $request)
         ]);
     }
 
+
     /**
      * @Route("/wishlist", name="wishlist")
+     * *@IsGranted("ROLE_USER")
      */
     public function WishIndex(EntityManagerInterface $manager,  Request $request)
     {
@@ -647,8 +757,9 @@ public function otherUser(EntityManagerInterface $manager, Request $request)
 
 /**
 *@Route("/wishlist/delete/{id}", name="wishlist_delete")
+* @Security("is_granted('ROLE_USER') and user === element.getUser()")
 */
-public function wishDelete($id)
+public function wishDelete($id, Wishlist $element)
 {
     $repo = $this->getDoctrine()->getManager();
     $element = $repo->getRepository(Wishlist::class)->find($id);
@@ -659,9 +770,12 @@ public function wishDelete($id)
 
         $repo->remove($element);
         $repo->flush();
-        return $this->redirectToRoute('wishlist');
 
         $this->addFlash('wishdelete', 'Cet élément a bien été supprimé de votre wishlist');
+
+        return $this->redirectToRoute('wishlist');
+
+       
     }
 
 
@@ -676,6 +790,7 @@ public function wishDelete($id)
                                         // WISHLIST DES AUTRES USERS
 /**
 *@Route("/theirwishes/{id}", name="their_wishes")
+*@IsGranted("ROLE_USER")
 */
 public function otherWishlist(EntityManagerInterface $manager, Request $request, $id)
 {

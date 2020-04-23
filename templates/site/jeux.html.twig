@@ -67,7 +67,7 @@
 
 
   {% if jeux  %}
-  <h4 class="text-center">Ici, vous avez {{jeux|length}} élément(s) de votre collection</h4>
+  <h4 class="text-center">Ici, vous avez {{jeux|length}} élément(s) de votre <u><a href="{{ path('collection')}}">collection</a></u></h4>
 
   <div class="container">
     <section class="articles my-5 text-center">
@@ -75,11 +75,11 @@
             {% for pagejeu in pagejeux %}
                 <div class="col-12 col-lg-6 col-sm-12">
                     <articles>
-                        <h2 class="mt-5">{{pagejeu.title}}</h2>
+                        <h3 class="mt-5 text-break">{{pagejeu.title}}</h3>
                         <h4>{{pagejeu.category.title}}</h4>
                         <div class="metadata">{{pagejeu.year}}</div>
                         <div class="content">
-                            <img src="{{pagejeu.image}}" width="300px" height="auto" alt="">
+                            <img src="{{pagejeu.image}}" width="250px" height="auto" alt="">
                             <div> {{pagejeu.author | raw}} </div>
                             <div>{{pagejeu.reference | raw}}</div>
                             <a href="{{ path('site_show' , {'id':pagejeu.id}) }}" class="btn btn-primary">lire la suite</a>
@@ -99,12 +99,11 @@
    
 
     {% else %}
-
-<div class="container text-center">
-    <h1 class="mt-5 text-center">Vous n'avez pas d'éléments dans cette collection !</h1>
-    <h3 class="mt-5">Ajoutez-en et venez contempler votre belle médiathèque ! :)</h3>
-    <img class="" src="https://www.covoiturage-simple.com/images/oups.png" alt="">
-</div>
+    <h2 class="mt-5 text-center">Vous n'avez pas d'éléments dans cette <u><a href="{{ path('collection')}}">collection</a></u> !</h2>
+    <div class="container text-center">
+        <img src="https://www.covoiturage-simple.com/images/oups.png" alt="oups">
+    </div>
+    <h3 class="text-center mt-5">Ajoutez-en et venez contempler votre belle médiathèque ! :)</h3>
     {% endif %}
     
 

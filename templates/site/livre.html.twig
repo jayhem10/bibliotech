@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello SiteController!{% endblock %}
+{% block title %}Livres{% endblock %}
 
 
 
@@ -68,7 +68,7 @@
 
 
   {% if livres  %}
-  <h4 class="text-center">Ici, vous avez {{livres|length}} élément(s) de votre collection</h4>
+  <h4 class="text-center">Ici, vous avez {{livres|length}} élément(s) de votre <u><a href="{{ path('collection')}}">collection</a></u></h4>
 
   <div class="container">
     <section class="articles my-5 ">
@@ -76,11 +76,11 @@
             {% for pagelivre in pagelivres %}
                 <div class="col-12 col-lg-6 text-center">
                     <articles>
-                        <h2 class="mt-5">{{pagelivre.title}}</h2>
+                        <h3 class="mt-5 text-break">{{pagelivre.title}}</h3>
                         <h4>{{pagelivre.category.title}}</h4>
                         <div class="metadata">{{pagelivre.year}}</div>
                         <div class="content">
-                            <img src="{{pagelivre.image}}" width="300px" height="auto" alt="">
+                            <img src="{{pagelivre.image}}" width="250px" height="auto" alt="">
                             <div> {{pagelivre.author | raw}} </div>
                             <div>{{pagelivre.reference | raw}}</div>
                             <a href="{{ path('site_show' , {'id':pagelivre.id}) }}" class="btn btn-primary">lire la suite</a>
@@ -101,10 +101,12 @@
 
     {% else %}
 
-    <h1 class="mt-5 text-center">Vous n'avez pas d'éléments dans cette collection !</h1>
-    <h3 class="text-center mt-5">Ajoutez-en et venez contempler votre belle médiathèque ! :)</h3>
+
+    <h2 class="mt-5 text-center">Vous n'avez pas d'éléments dans cette <u><a href="{{ path('collection')}}">collection</a></u> !</h2>
     <div class="container text-center">
-    <img class="center" src="https://www.covoiturage-simple.com/images/oups.png" alt="">
+        <img src="https://www.covoiturage-simple.com/images/oups.png" alt="oups">
+    </div>
+    <h3 class="text-center mt-5">Ajoutez-en et venez contempler votre belle médiathèque ! :)</h3>
     
     {% endif %}
     

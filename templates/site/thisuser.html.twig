@@ -91,7 +91,7 @@
             {% for pageliste in pagelistes|slice(0,18) %}
                 <div class="col-12 col-lg-6 text-center">
                     <articles>
-                        <h2 class="mt-5">{{pageliste.title}}</h2>
+                        <h2 class="mt-5 text-break">{{pageliste.title}}</h2>
                         <h4>{{pageliste.category.title}}</h4>
                         <div class="metadata">{{pageliste.year}}</div>
                         <div class="content">

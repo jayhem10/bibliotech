@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Csrf\TokenGenerator\TokenGeneratorInterface;
@@ -89,6 +90,8 @@ public function logout(){
  * 
  * @Route("/account/profile", name="account_profile")
  * 
+ * @IsGranted("ROLE_USER")
+ * 
  */
 public function profile(Request $request, EntityManagerInterface $manager){
 
@@ -124,7 +127,7 @@ public function profile(Request $request, EntityManagerInterface $manager){
  * Permet d'afficher et de traiter le formulaire de modification du mot de passe
  * 
  * @Route("/account/password-update", name="account_password")
- * 
+ * @IsGranted("ROLE_USER")
  * @return Response
  * 
  */

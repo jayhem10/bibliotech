@@ -73,11 +73,11 @@
             {% for pageliste in pagelistes %}
                 <div class="col-12 col-lg-6 text-center">
                     <articles>
-                        <h2 class="mt-5">{{pageliste.title}}</h2>
+                        <h3 class="mt-5 text-break">{{pageliste.title}}</h3>
                         <h4>{{pageliste.category.title}}</h4>
                         <div class="metadata">{{pageliste.year}}</div>
                         <div class="content">
-                            <img src="{{pageliste.image}}" width="300px" height="auto" alt="">
+                            <img src="{{pageliste.image}}" width="250px" height="auto" alt="">
                             <div> {{pageliste.author | raw}} </div>
                             <div>{{pageliste.reference | raw}}</div>
                             <a href="{{ path('site_show' , {'id':pageliste.id}) }}" class="btn btn-primary">lire la suite</a>
